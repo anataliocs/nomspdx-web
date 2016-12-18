@@ -1,0 +1,12 @@
+version: '2'
+services:
+    nomspdx-postgresql:
+        container_name: nomspdx-postgresql
+        image: postgres:9.5.4
+        # volumes:
+        #     - ~/volumes/jhipster/nomspdx/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=nomspdx
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
