@@ -1,5 +1,6 @@
 package com.nomspdx.api.web.rest;
 
+import com.nomspdx.api.model.places.GooglePlace;
 import com.nomspdx.api.service.google.PlacesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +18,9 @@ public class GooglePlacesResource {
     PlacesService placesService;
 
     @GetMapping("/places")
-    public ResponseEntity<String> activateAccount(@RequestParam(value = "sort") String sort,
-                                                   @RequestParam(value = "page") String page) {
+    public ResponseEntity<GooglePlace> activateAccount(@RequestParam(value = "sort") String sort,
+                                                       @RequestParam(value = "page") String page) {
 
-        return new ResponseEntity<String>(placesService.getPlaces(), HttpStatus.OK);
+        return new ResponseEntity<GooglePlace>(placesService.getPlaces(), HttpStatus.OK);
     }
 }

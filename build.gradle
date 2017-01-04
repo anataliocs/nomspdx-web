@@ -1,6 +1,7 @@
 import org.gradle.internal.os.OperatingSystem
 
 buildscript {
+    ext.kotlin_version = '1.0.5-2'
     repositories {
         mavenLocal()
         mavenCentral()
@@ -17,11 +18,13 @@ buildscript {
         classpath "com.moowork.gradle:gradle-node-plugin:0.13"
         classpath "com.moowork.gradle:gradle-gulp-plugin:0.13"
         classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //jhipster-needle-gradle-buildscript-dependency - JHipster will add additional gradle build script plugins here
     }
 }
 
 apply plugin: 'java'
+apply plugin: 'kotlin'
 sourceCompatibility=1.8
 targetCompatibility=1.8
 apply plugin: 'maven'
@@ -172,7 +175,7 @@ dependencies {
     compile ("com.ryantenney.metrics:metrics-spring:${metrics_spring_version}") {
         exclude(module: 'metrics-core')
         exclude(module: 'metrics-healthchecks')
-    } 
+    }
     compile "javax.cache:cache-api:${jcache_version}"
     compile "org.hibernate:hibernate-core:${hibernate_version}"
     compile("com.zaxxer:HikariCP") {
@@ -183,10 +186,10 @@ dependencies {
     compile "javax.inject:javax.inject:${javax_inject_version}"
     compile "javax.transaction:javax.transaction-api"
     compile "org.apache.geronimo.javamail:geronimo-javamail_1.4_mail:${geronimo_javamail_1_4_mail_version}"
-    
+
     compile ("org.ehcache:ehcache")
     compile ("org.hibernate:hibernate-jcache:${hibernate_version}")
-    
+
     compile "org.hibernate:hibernate-envers"
     compile "org.hibernate:hibernate-validator"
     compile ("org.liquibase:liquibase-core:${liquibase_core_version}") {
@@ -242,8 +245,9 @@ dependencies {
     testCompile "com.mattbertolini:liquibase-slf4j:${liquibase_slf4j_version}"
     testCompile "org.hamcrest:hamcrest-library"
     testCompile "io.gatling.highcharts:gatling-charts-highcharts:${gatling_version}"
-    
+
     optional "org.springframework.boot:spring-boot-configuration-processor:${spring_boot_version}"
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
 
@@ -265,3 +269,7 @@ task stage(dependsOn: 'bootRepackage') {
 compileJava.dependsOn processResources
 processResources.dependsOn cleanResources,bootBuildInfo
 bootBuildInfo.mustRunAfter cleanResources
+sourceSets {
+    main.kotlin.srcDirs += 'src/main/java'
+    main.java.srcDirs += 'src/main/java'
+}
